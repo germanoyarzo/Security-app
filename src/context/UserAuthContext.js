@@ -32,6 +32,12 @@ export function UserAuthContextProvider({ children }) {
   function resetPassword(email) {
     return sendPasswordResetEmail(auth,email);
   }
+  function forgotPassword(email) {
+    return sendPasswordResetEmail(auth, email, {
+      url: `http://localhost:3000/login`,
+    })
+  }
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
@@ -46,7 +52,7 @@ export function UserAuthContextProvider({ children }) {
 
   return (
     <userAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, googleSignIn, resetPassword }}
+      value={{ user, logIn, signUp, logOut, googleSignIn, resetPassword, forgotPassword }}
     >
       {children}
     </userAuthContext.Provider>

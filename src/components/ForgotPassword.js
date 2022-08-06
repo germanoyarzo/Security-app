@@ -4,6 +4,7 @@ import { useUserAuth } from "../context/UserAuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import swal from 'sweetalert';
 
 export default function ForgotPassword() {
 
@@ -22,8 +23,10 @@ export default function ForgotPassword() {
       setLoading(true)
       await resetPassword(emailRef.current.value)
       setMessage('Chequea tu bandeja de entrada y sigue las instrucciones')
+      swal('Revisa tu casilla de correo')
     } catch {
       setError('Fallo al restaurar tu password')
+      swal('Fallo al restaurar tu password, verifica si el mail ingresado es correcto')
     }
 
     setLoading(false)
