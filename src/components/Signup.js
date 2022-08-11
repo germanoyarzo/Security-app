@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
 
 const Signup = () => {
@@ -27,6 +27,7 @@ const Signup = () => {
 
   return (
     <>
+     <Container style={{ width: "400px" }}>
       <div className="p-4 box">
         <h2 className="mb-3">Firebase Auth Signup</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -57,6 +58,7 @@ const Signup = () => {
       <div className="p-4 box mt-3 text-center">
         Already have an account? <Link to="/">Log In</Link>
       </div>
+      </Container>
     </>
   );
 };
