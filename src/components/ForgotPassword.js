@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useUserAuth } from "../context/UserAuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, Alert } from "react-bootstrap";
+import { Container,Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import swal from 'sweetalert';
 
@@ -33,6 +33,7 @@ export default function ForgotPassword() {
   }
 
   return (
+    <Container style={{ width: "400px" }}>
     <div>
       <section className="login">
         <div className="loginContainer">
@@ -56,5 +57,6 @@ export default function ForgotPassword() {
         </div>
       </section>
     </div>
+    </Container>
   )
 }
