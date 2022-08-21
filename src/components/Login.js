@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
 
+
 const Login = () => {
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -13,7 +14,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -37,9 +38,10 @@ const Login = () => {
   };
     return (
         <>
-        <Container style={{ width: "400px" }}>
+        <body style={{height: "100vh"}}>
+        <Container style={{ width: "400px"}}>
           <div className="p-4 box">
-            <h2 className="mb-3" align="center">Security app Login</h2>
+            <h2 className="mb-3" align="center">Security App Login</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -78,6 +80,8 @@ const Login = () => {
             Don't have an account? <Link to="/signup">Sign up</Link>
           </div>
           </Container>  
+        </body>
+        
         </>
       );
 }
