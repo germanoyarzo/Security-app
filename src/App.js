@@ -12,11 +12,12 @@ import Show from './components/Show';
 import Create from './components/Create';
 import Edit from './components/Edit';
 import ShowObjetivos from './components/ShowObjetivos';
+import UploadImagen from './components/UploadImagen';
 
 
 function App() {
   return (
-    <Container style={{ width: "1400px" }}>
+    <Container style={{width:"1400px"}}>
       <Row>
         <Col>
           <UserAuthContextProvider>
@@ -44,6 +45,10 @@ function App() {
                 <ProtectedRoute>
                   <ShowObjetivos/>
                 </ProtectedRoute> } />
+              <Route path = "/upload-imagen" element={
+                  <ProtectedRoute>
+                    <UploadImagen/>
+                  </ProtectedRoute> } />
             </Routes>
           </UserAuthContextProvider>
         </Col>

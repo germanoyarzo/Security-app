@@ -27,7 +27,8 @@ const Signup = () => {
 
   return (
     <>
-     <Container style={{ width: "400px" }}>
+    <body style={{height: "100vh"}}>
+       <Container style={{ width: "400px" }}>
       <div className="p-4 box">
         <h2 className="mb-3">Firebase Auth Signup</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -59,6 +60,8 @@ const Signup = () => {
         Already have an account? <Link to="/">Log In</Link>
       </div>
       </Container>
+    </body>
+    
     </>
   );
 };

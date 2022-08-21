@@ -60,6 +60,7 @@ const ShowObjetivos = () => {
   //7 - devolvemos vista de nuestro componente
   return (
     <>
+    <h1 align="center">Listado de objetivos</h1>
     <div className='container' >
       <div className="d-grid gap-2">
             <Link to="/create" className='btn btn-primary'>Create</Link>    

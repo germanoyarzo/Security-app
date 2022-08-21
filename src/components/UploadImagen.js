@@ -13,7 +13,7 @@ import {
 import { storage } from "../firebase";
 import { v4 } from "uuid";
 
-const Home = () => {
+const UploadImagen = () => {
   const { logOut, user } = useUserAuth();
   const { table, user2 } = useUserAuth();
   const navigate = useNavigate();
@@ -65,19 +65,24 @@ const Home = () => {
     <body style={{height: "100vh"}}>
       <Container style={{ width: "400px" }}>
         <div className="p-4 box mt-3 text-center">
-          Hello Welcome <br />
-          {user && user.email}
+            <Avatar src={imageUrls} sx={{ width: 150, height: 150 }} class="center" />
         </div>
-        <div className="d-grid gap-2">
-          <Button variant="primary" onClick={handleLogout}>
-            Log out
-          </Button>
+        <div> 
+          <input
+              type="file" 
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
         </div>
+    
         <div className="p-4 box mt-3 text-center">
-          <Button variant="primary" onClick={handleTable}>
-          Ver planilla
-          </Button>
+          <button onClick={uploadFile}> Subir imagen</button>
+          {imageUrls.map((url) => {
+            //return <img src={url} style={{width:"150px", height:"150px"}} />;
+          })}
         </div>
+        
       </Container>
     </body>
     
@@ -85,4 +90,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UploadImagen;

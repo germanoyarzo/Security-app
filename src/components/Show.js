@@ -6,15 +6,47 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { async } from '@firebase/util'
 import { CSVLink} from 'react-csv';
+import { useNavigate } from "react-router";
+import { useUserAuth } from "../context/UserAuthContext";
+import { Container, Button } from "react-bootstrap";
+import styled from "styled-components";
+import Footer from './Footer';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Navbar from '../components/Navbar';
+
 
 const MySwal = withReactContent(Swal)
 
 const Show = () => {
+
+  const Right = styled.div`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+`
+const Left = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+`
+const Wrapper = styled.div`
+    padding: 10px 20px;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    background-color: teal;
+`
+
+
   //1 - configuramos los hooks
   const [vigiladores, setvigiladores] = useState( [] )
 
   //2 - referenciamos a la db2 firestore
   const vigiladoresCollection = collection(db2, "vigiladores")
+  
 
   //3 - Funcion para mostrar TODOS los docs
   const getvigiladores = async ()   => {
@@ -62,42 +94,51 @@ const Show = () => {
   //7 - devolvemos vista de nuestro componente
   return (
     <>
+    <div>
+    <Container>
+          <Navbar />     
+    </Container>
+    </div>
+    <h1 align="center">Listado de vigiladores</h1>
     <div className='container'>
+      <Right>
+        <CSVLink  data={ vigiladores} filename="Planilla"  className="btn btn-success mb-3">Exportar</CSVLink>
+      </Right>
+      <Left>
+            
+      </Left>
       <div className='row'>
         <div className='col'>
-          <CSVLink  data={ vigiladores} filename="Planilla"  className="btn btn-success mb-3">Export</CSVLink>
-          <table className='table' style={{border:"1px", position:"relative", minHeight:"100%"}}>
+          <table className='table' style={{border:"1px", minHeight:"100%"}}>
             <thead class="table-dark">
-              <tr>
-                <th>Nombre-Apellido</th>
-                <th>Horario</th>
-                <th>Cantidad de horas</th>
-                <th>Objetivo</th>
-                <th>Actions</th>
+              <tr align="center">
+                <th style={{ backgroundColor:"teal"}}>Nombre-Apellido</th>
+                <th style={{ backgroundColor:"teal"}}>Horario</th>
+                <th style={{ backgroundColor:"teal"}}>Cantidad de horas</th>
+                <th style={{ backgroundColor:"teal"}}>Objetivo</th>
+                <th style={{ backgroundColor:"teal"}}>Actions</th>
               </tr>
             </thead>
             <tbody>
               { vigiladores.map( (vigilador) => (
                 console.log(vigilador),
-                <tr key={vigilador.id}>
+                <tr align="center" key={vigilador.id}>
                   <td>{vigilador.nombre_apellido}</td>
                   <td>{vigilador.horario}</td>
                   <td>{vigilador.cantidad_horas}</td>
                   <td>{vigilador.objetivo}</td>
                   <td>
-                    <Link to={`/edit/${vigilador.id}`} className="btn btn-light"><i className="fa-solid fa-pencil">Modificar</i></Link>
-                    <button onClick={ () => { confirmDelete(vigilador.id) } } className="btn btn-danger"><i className="fa-solid fa-trash">Eliminar</i></button>
+                    <Link to={`/edit/${vigilador.id}`} className="btn btn-secondary"><EditIcon>Modificar</EditIcon></Link>
+                    <button onClick={ () => { confirmDelete(vigilador.id) } } className="btn btn-danger"><DeleteIcon>Eliminar</DeleteIcon></button>
                   </td>
                 </tr>                
               )) }
             </tbody>
           </table>
-          <div className="d-grid gap-2">
-            <Link to="/create" className='btn btn-primary'>Create</Link>    
-         </div>
         </div>
       </div>
-    </div>
+     
+    </div>  
     </>
   )
 }
