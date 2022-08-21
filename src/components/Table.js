@@ -10,52 +10,29 @@ import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { Container, Button } from "react-bootstrap";
 import styled from "styled-components";
-import Footer from './Footer';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from '../components/Navbar';
-
-
 const MySwal = withReactContent(Swal)
 
-const Show = () => {
-
-  const Right = styled.div`
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-`
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end; 
-`
-const Wrapper = styled.div`
-    padding: 10px 20px;
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-    background-color: teal;
-`
-
-
-  //1 - configuramos los hooks
+const Table = ({ data }) => {
+     //1 - configuramos los hooks
   const [vigiladores, setvigiladores] = useState( [] )
-
+  const [tablaVigiladores, setTablaVigiladores]= useState([]);
   //2 - referenciamos a la db2 firestore
   const vigiladoresCollection = collection(db2, "vigiladores")
+
+  const [busqueda, setBusqueda]= useState("");
   
 
   //3 - Funcion para mostrar TODOS los docs
   const getvigiladores = async ()   => {
    const data = await getDocs(vigiladoresCollection)
-   console.log(data.docs)
+   //console.log(data.docs)
    setvigiladores(
        data.docs.map( (doc) => ( {...doc.data(),id:doc.id}))
    )
-   //console.log(vigiladores)
+   setTablaVigiladores(data.docs.map( (doc) => ( {...doc.data(),id:doc.id})));
   }
   //4 - Funcion para eliminar un doc
   const deletevigilador = async (id) => {
@@ -85,29 +62,39 @@ const Wrapper = styled.div`
       }
     })    
   }
+  
+  const handleChange=e=>{
+    setBusqueda(e.target.value);
+    filtrar(e.target.value);
+  }
+
+  const filtrar=(terminoBusqueda)=>{
+    var resultadosBusqueda=tablaVigiladores.filter((elemento)=>{
+      if(elemento.nombre_apellido.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      || elemento.cantidad_horas.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+      ){
+        return elemento;
+      }
+    });
+    setvigiladores(resultadosBusqueda);
+  }
   //6 - usamos useEffect
   useEffect( () => {
     getvigiladores()
     // eslint-disable-next-line
   }, [] )
-
-  //7 - devolvemos vista de nuestro componente
-  return (
-    <>
-    <div>
-    <Container>
-          <Navbar />     
-    </Container>
-    </div>
-    <h1 align="center">Listado de vigiladores</h1>
-    <div className='container'>
-      <Right>
-        <CSVLink  data={ vigiladores} filename="Planilla"  className="btn btn-success mb-3">Exportar</CSVLink>
-      </Right>
-      <Left>
-            
-      </Left>
-      <div className='row'>
+ 
+    return (
+        <div className="Table">
+        <div className="containerInput">
+          <input
+            className="form-control inputBuscar mb-3"
+            value={busqueda}
+            placeholder="Búsqueda por Nombre o Apellido"
+            onChange={handleChange}
+          />
+        </div>
+        <div className='row'>
         <div className='col'>
           <table className='table' style={{border:"1px", minHeight:"100%"}}>
             <thead class="table-dark">
@@ -120,7 +107,7 @@ const Wrapper = styled.div`
               </tr>
             </thead>
             <tbody>
-              { vigiladores.map( (vigilador) => (
+              {vigiladores.map( (vigilador) => (
                 console.log(vigilador),
                 <tr align="center" key={vigilador.id}>
                   <td>{vigilador.nombre_apellido}</td>
@@ -128,19 +115,17 @@ const Wrapper = styled.div`
                   <td>{vigilador.cantidad_horas}</td>
                   <td>{vigilador.objetivo}</td>
                   <td>
-                    <Link to={`/edit/${vigilador.id}`} className="btn btn-secondary"><EditIcon>Modificar</EditIcon></Link>
-                    <button onClick={ () => { confirmDelete(vigilador.id) } } className="btn btn-danger"><DeleteIcon>Eliminar</DeleteIcon></button>
+                    <Link to={`/edit/${vigilador.id}`} className="btn btn-outline-secondary"><EditIcon>Modificar</EditIcon></Link>
+                    <button onClick={ () => { confirmDelete(vigilador.id) } } className="btn btn-outline-danger"><DeleteIcon>Eliminar</DeleteIcon></button>
                   </td>
                 </tr>                
               )) }
             </tbody>
           </table>
         </div>
-      </div>
-     
-    </div>  
-    </>
-  )
-}
-
-export default Show
+        </div>
+        </div>
+    );
+  };
+  
+  export default Table;

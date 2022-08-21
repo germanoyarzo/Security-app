@@ -65,7 +65,7 @@ const Home = () => {
     <body style={{height: "100vh"}}>
       <Container style={{ width: "400px" }}>
         <div className="p-4 box mt-3 text-center">
-          Hello Welcome <br />
+          Bienvenido <br />
           {user && user.email}
         </div>
         <div className="d-grid gap-2">
