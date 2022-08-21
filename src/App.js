@@ -1,18 +1,18 @@
 import './App.css';
 import { Routes, Route} from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserAuthContextProvider } from "./context/UserAuthContext";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ForgotPassword from './components/ForgotPassword';
-import Show from './components/Show';
-import Create from './components/Create';
-import Edit from './components/Edit';
-import ShowObjetivos from './components/ShowObjetivos';
-import UploadImagen from './components/UploadImagen';
+import ForgotPassword from './pages/ForgotPassword';
+import Show from './pages/Show';
+import Create from './pages/Create';
+import Edit from './pages/Edit';
+import ShowObjetivos from './pages/ShowObjetivos';
+import UploadImagen from './pages/UploadImagen';
 
 
 function App() {
