@@ -5,7 +5,8 @@ import { db2 } from "../firebase";
 
 const Edit = () => {
     const [ nombre, setNombre ] = useState('')
-    const [ horario, setHorario ] = useState('')
+    const [ inicio, setInicio ] = useState('')
+    const [ finalizacion, setFinalizacion ] = useState('')
     const [ cantidadHoras, setCantidadHoras ] = useState(0)
 
     const navigate = useNavigate()    
@@ -14,7 +15,7 @@ const Edit = () => {
     const update = async (e) => {
         e.preventDefault()
         const vigilador = doc(db2, "vigiladores", id)
-        const data = {nombre_apellido: nombre, horario: horario, cantidad_horas:cantidadHoras}
+        const data = {nombre_apellido: nombre, inicio: inicio, finalizacion: finalizacion, cantidad_horas:cantidadHoras}
         await updateDoc(vigilador, data)
         navigate('/show')
     }
@@ -24,7 +25,8 @@ const Edit = () => {
         if(vigilador.exists()) {
             console.log(vigilador.data())
             setNombre(vigilador.data().nombre)
-            setHorario(vigilador.data().horario)    
+            setInicio(vigilador.data().inicio)
+            setFinalizacion(vigilador.data().finalizacion)    
             setCantidadHoras(vigilador.data().cantidadHoras)
         }else{
             console.log('El vigilador no existe')
@@ -52,20 +54,20 @@ const Edit = () => {
                         />
                     </div>  
                     <div className='mb-3'>
-                        <label className='form-label'>Horario</label>
+                        <label className='form-label'>Hora Inicio</label>
                         <input
-                            value={horario}
-                            onChange={ (e)=> setHorario(e.target.value)} 
+                            value={inicio}
+                            onChange={ (e)=> setInicio(e.target.value)} 
                             type="datetime-local"
                             className='form-control'
                         />                 
-                    </div>  
+                    </div> 
                     <div className='mb-3'>
-                        <label className='form-label'>Cantidad de horas</label>
+                        <label className='form-label'>Hora Finalización</label>
                         <input
-                            value={cantidadHoras}
-                            onChange={ (e)=> setCantidadHoras(e.target.value)} 
-                            type="number"
+                            value={finalizacion}
+                            onChange={ (e)=> setFinalizacion(e.target.value)} 
+                            type="datetime-local"
                             className='form-control'
                         />                 
                     </div>  

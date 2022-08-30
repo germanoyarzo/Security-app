@@ -5,7 +5,8 @@ import { db2 } from "../firebase";
 
 const Create = () => {
   const [ nombre, setNombre ] = useState('')
-  const [ horario, setHorario ] = useState('')
+  const [ inicio, setInicio ] = useState('')
+  const [ finalizacion, setFinalizacion ] = useState('')
   const [ cantidadHoras, setCantidadHoras ] = useState(0)
   const navigate = useNavigate()
 
@@ -13,7 +14,7 @@ const Create = () => {
 
   const store = async (e) => {
     e.preventDefault()
-    await addDoc( vigiladoresCollection,{nombre_apellido: nombre, horario: horario, cantidad_horas:cantidadHoras} )
+    await addDoc( vigiladoresCollection,{nombre_apellido: nombre, inicio: inicio, finalizacion: finalizacion, cantidad_horas:cantidadHoras} )
     navigate('/show')
     //console.log(e.target[0].value)
   }
@@ -34,10 +35,19 @@ const Create = () => {
                         />
                     </div>  
                     <div className='mb-3'>
-                        <label className='form-label'>Horario</label>
+                        <label className='form-label'>Hora Inicio</label>
                         <input
-                            value={horario}
-                            onChange={ (e)=> setHorario(e.target.value)} 
+                            value={inicio}
+                            onChange={ (e)=> setInicio(e.target.value)} 
+                            type="datetime-local"
+                            className='form-control'
+                        />                 
+                    </div> 
+                    <div className='mb-3'>
+                        <label className='form-label'>Hora Finalización</label>
+                        <input
+                            value={finalizacion}
+                            onChange={ (e)=> setFinalizacion(e.target.value)} 
                             type="datetime-local"
                             className='form-control'
                         />                 

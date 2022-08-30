@@ -100,10 +100,11 @@ const Table = ({ data }) => {
             <thead class="table-dark">
               <tr align="center">
                 <th style={{ backgroundColor:"teal"}}>Nombre-Apellido</th>
-                <th style={{ backgroundColor:"teal"}}>Horario</th>
+                <th style={{ backgroundColor:"teal"}}>Hora Inicio</th>
+                <th style={{ backgroundColor:"teal"}}>Hora Finalizacion</th>
                 <th style={{ backgroundColor:"teal"}}>Cantidad de horas</th>
                 <th style={{ backgroundColor:"teal"}}>Objetivo</th>
-                <th style={{ backgroundColor:"teal"}}>Actions</th>
+                <th style={{ backgroundColor:"teal"}}>Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -111,7 +112,8 @@ const Table = ({ data }) => {
                 console.log(vigilador),
                 <tr align="center" key={vigilador.id}>
                   <td>{vigilador.nombre_apellido}</td>
-                  <td>{vigilador.horario}</td>
+                  <td>{vigilador.inicio}</td>
+                  <td>{vigilador.finalizacion}</td>
                   <td>{vigilador.cantidad_horas}</td>
                   <td>{vigilador.objetivo}</td>
                   <td>
