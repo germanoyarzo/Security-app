@@ -14,15 +14,16 @@ import Footer from './Footer';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from '../components/Navbar';
-import Table from "../components/Table"
+import TableUser from "../components/TableUser"
 import { getAuth } from "firebase/auth";
 
 const MySwal = withReactContent(Swal)
 
-const Show = () => {
+const ShowUser = () => {
 
 const auth = getAuth();
 const user = auth.currentUser;
+console.log(user.uid)
 
 if (user !== null) {
   user.providerData.forEach((profile) => {
@@ -115,10 +116,10 @@ const Wrapper = styled.div`
       <Right>
         <CSVLink  data={ vigiladores} filename="Planilla"  className="btn btn-outline-success mb-3">Exportar</CSVLink>
       </Right>
-      <Table />
+      <TableUser data={ user.uid }/>
     </div>  
     </>
   )
 }
 
-export default Show
+export default ShowUser

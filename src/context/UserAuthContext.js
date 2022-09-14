@@ -9,17 +9,42 @@ import {
   sendPasswordResetEmail
 } from "firebase/auth";
 import { auth } from "../firebase";
+import { getFirestore, doc, getDoc, collection, setDoc } from "firebase/firestore";
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState({});
+  const db = getFirestore();
 
-  function logIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+  async function logIn(email, password,rol) {
+    const infoUsuario= await signInWithEmailAndPassword(auth, email, password);
+
+    console.log(infoUsuario.user.uid);
+    const docuRef = doc(db,`usuarios/${infoUsuario.user.uid}`);
+    const docuCifrada = await getDoc(docuRef);
+    const infoFinal = docuCifrada.data().rol;
+    console.log(infoFinal)
+    
+      const userData = {
+        uid: infoUsuario.user.uid,
+        email: infoUsuario.user.email,
+        rol: infoFinal,
+      };
+      setUser(userData);
+      console.log("userData fianl", userData);
+    
+    return infoUsuario
+    //return signInWithEmailAndPassword(auth, email, password);
   }
-  function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  async function signUp(email, password, rol) {
+    const infoUsuario= await createUserWithEmailAndPassword(auth, email, password);
+
+    console.log(infoUsuario.user.uid);
+    const docuRef = doc(db,`usuarios/${infoUsuario.user.uid}`);
+    setDoc(docuRef, { email: email, rol: rol});
+    
+    return infoUsuario
   }
   function logOut() {
     return signOut(auth);
@@ -38,6 +63,15 @@ export function UserAuthContextProvider({ children }) {
     })
   }
 
+  
+
+  async function getRol(uid) {
+    const docuRef = doc(db, `usuarios/${uid}`);
+    const docuCifrada = await getDoc(docuRef);
+    const infoFinal = docuCifrada.data().rol;
+    console.log(infoFinal)
+    return infoFinal;
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {

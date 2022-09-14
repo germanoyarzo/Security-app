@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from './pages/ForgotPassword';
 import Show from './pages/Show';
+import ShowUser from './pages/ShowUser';
 import Create from './pages/Create';
 import Edit from './pages/Edit';
 import ShowObjetivos from './pages/ShowObjetivos';
@@ -33,6 +34,10 @@ function App() {
                 <ProtectedRoute>
                   <Show/>
                 </ProtectedRoute> } />
+              <Route path = "/show-user" element={
+                <ProtectedRoute>
+                  <ShowUser/>
+              </ProtectedRoute> } />  
               <Route path = "/create" element={
                 <ProtectedRoute>
                   <Create/>
